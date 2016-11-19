@@ -87,6 +87,11 @@ public class MainActivity extends AppCompatActivity {
         if (token != null) {
             Profile.fetchProfileForCurrentAccessToken();
             Log.d("PROFILE TEST", Profile.getCurrentProfile().getFirstName());
+
+            Intent intent = new Intent(getApplicationContext(), MainTabActivity.class);
+            startActivity(intent);
+            finish();
+
         }
         else {
             Log.d("PROFILE TEST", "Nobody logged in.");
