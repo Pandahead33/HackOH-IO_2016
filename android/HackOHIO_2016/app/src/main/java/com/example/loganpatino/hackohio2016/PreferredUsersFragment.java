@@ -27,6 +27,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import com.example.loganpatino.hackohio2016.RetrofitPreferredUserInterface.PreferredUserService;
+import com.facebook.login.widget.ProfilePictureView;
 
 
 /**
@@ -123,7 +124,7 @@ public class PreferredUsersFragment extends Fragment {
 
     private List<OtherUser> getOtherUsers() {
         List<OtherUser> otherUsers = new ArrayList<>();
-        OtherUser user = new OtherUser("Logan", "testing");
+        OtherUser user = new OtherUser("Lucas", "1241317319265906");
         otherUsers.add(user);
         PreferredUserService service = mRetrofit.create(PreferredUserService.class);
         Call<List<OtherUser>> call = service.getPreferredFriends(mUserId);
@@ -179,7 +180,9 @@ public class PreferredUsersFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(PreferredUserViewHolder holder, int position) {
-            holder.setName(mOtherUsers.get(position).getFirstName());
+            OtherUser currentUser = mOtherUsers.get(position);
+            holder.setName(currentUser.getFirstName());
+            holder.setPic(currentUser.getProfilePicUrl());
         }
 
         @Override
@@ -190,14 +193,20 @@ public class PreferredUsersFragment extends Fragment {
 
     private class PreferredUserViewHolder extends RecyclerView.ViewHolder {
         private TextView name;
+        private ProfilePictureView pic;
 
         public PreferredUserViewHolder(View itemView) {
             super(itemView);
-            name = (TextView) itemView.findViewById(R.id.name);
+            name = (TextView) itemView.findViewById(R.id.firstName);
+            pic = (ProfilePictureView) itemView.findViewById(R.id.pic);
         }
 
         public void setName(String name) {
             this.name.setText(name);
+        }
+
+        public void setPic(String id) {
+            this.pic.setProfileId(id);
         }
     }
 }

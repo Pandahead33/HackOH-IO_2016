@@ -60,7 +60,7 @@ public class LobbyActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                mPartyMembers.add(new OtherUser("Lucas", ""));
+                mPartyMembers.add(new OtherUser("Lucas", "1241317319265906"));
                 mAdapter.notifyDataSetChanged();
             }
         }, WAIT_TIME);
@@ -109,9 +109,9 @@ public class LobbyActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... params) {
-            int threshold = 8000;
+            int threshold = 25000;
             int dots = 0;
-            while (count < 150000) {
+            while (count < 200000) {
                 count++;
                 //Log.d("count", String.valueOf(count));
                 if (count > threshold) {
@@ -121,7 +121,7 @@ public class LobbyActivity extends AppCompatActivity {
                             mWaiting.append(".");
                         }
                     });
-                    threshold += 8000;
+                    threshold += 25000;
                     dots++;
                     if (dots == 4) {
                         dots = 0;
