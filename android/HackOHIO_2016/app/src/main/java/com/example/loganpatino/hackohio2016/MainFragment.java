@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -83,33 +84,50 @@ public class MainFragment extends Fragment {
                             //sports
                             case 0:
                                 System.out.println("sports");
+                                Intent sportIntent = new Intent(getActivity(), SportsActivity.class);
+                                startActivity(sportIntent);
+
                                 break;
                             //hang
                             case 1:
                                 System.out.println("hang");
+                                Intent hangIntent = new Intent(getActivity(), HangActivity.class);
+                                startActivity(hangIntent);
+
                                 break;
                             //health
                             case 2:
                                 System.out.println("health");
+                                Intent healthIntent = new Intent(getActivity(), HealthActivity.class);
+                                startActivity(healthIntent);
+
                                 break;
                             //nightlife
                             case 3:
                                 System.out.println("nightlife");
+                                Intent nightIntent = new Intent(getActivity(), NightActivity.class);
+                                startActivity(nightIntent);
                                 break;
 
                             //food
                             case 4:
                                 System.out.println("food");
+                                Intent foodIntent = new Intent(getActivity(), FoodActivity.class);
+                                startActivity(foodIntent);
                                 break;
 
                             //hobby
                             case 5:
                                 System.out.println("hobby");
+                                Intent hobbyIntent = new Intent(getActivity(), HobbyActivity.class);
+                                startActivity(hobbyIntent);
                                 break;
 
                             //random
                             case 6:
                                 System.out.println("random");
+                                Intent randomIntent = new Intent(getActivity(), RandomActivity.class);
+                                startActivity(randomIntent);
                                 break;
 
                             //error

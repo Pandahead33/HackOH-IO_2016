@@ -11,6 +11,13 @@
     <string name="action_nightlife">Nightlife</string>
     <string name="action_hobby">Hobbies</string>
     <string name="title_activity_main_tab">MainTabActivity</string>
+    <string name="title_activity_sports">SportsActivity</string>
+    <string name="title_activity_health">HealthActivity</string>
+    <string name="title_activity_hang">HangActivity</string>
+    <string name="title_activity_night">NightActivity</string>
+    <string name="title_activity_food">FoodActivity</string>
+    <string name="title_activity_hobby">HobbyActivity</string>
+    <string name="title_activity_random">RandomActivity</string>
     <string name="section_format">Hello World from section: %1$d</string>
 
     <!-- TODO: Remove or change this placeholder text -->

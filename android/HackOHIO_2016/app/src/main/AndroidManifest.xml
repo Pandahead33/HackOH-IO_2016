@@ -39,7 +39,48 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait">
         </activity>
-
+        <activity
+            android:name=".SportsActivity"
+            android:label="@string/title_activity_sports"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".HangActivity"
+            android:label="@string/title_activity_hang"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".HealthActivity"
+            android:label="@string/title_activity_health"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".NightActivity"
+            android:label="@string/title_activity_night"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".FoodActivity"
+            android:label="@string/title_activity_food"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".HobbyActivity"
+            android:label="@string/title_activity_hobby"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".RandomActivity"
+            android:label="@string/title_activity_random"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait">
+        </activity>
   </application>
 
 </manifest>
