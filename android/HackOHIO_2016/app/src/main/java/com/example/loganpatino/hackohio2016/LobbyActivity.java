@@ -1,5 +1,6 @@
 package com.example.loganpatino.hackohio2016;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -60,10 +61,19 @@ public class LobbyActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                mPartyMembers.add(new OtherUser("Lucas", "1241317319265906"));
+                mPartyMembers.add(new OtherUser("Logan", "512148565"));
                 mAdapter.notifyDataSetChanged();
+                mWaiting.setText("connected!");
             }
         }, WAIT_TIME);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(LobbyActivity.this, VotingActivity.class);
+                startActivity(intent);
+            }
+        }, 10500);
     }
 
     private class LobbyActivityAdapter extends RecyclerView.Adapter<LobbyActivityViewHolder> {

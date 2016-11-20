@@ -22,6 +22,11 @@ public class VotingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_voting);
     }
 
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
+    }
+
 
 
 }

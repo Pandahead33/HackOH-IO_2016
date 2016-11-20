@@ -48,7 +48,7 @@ public class SplashScreen extends Activity {
     }
 
     private void setScaleAnimation(View view) {
-        ScaleAnimation anim = new ScaleAnimation(0.0f, 2.0f, 0.0f, 2.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        ScaleAnimation anim = new ScaleAnimation(0.0f, 2.5f, 0.0f, 2.5f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         anim.setDuration(3000);
         view.startAnimation(anim);
     }

@@ -124,7 +124,7 @@ public class PreferredUsersFragment extends Fragment {
 
     private List<OtherUser> getOtherUsers() {
         List<OtherUser> otherUsers = new ArrayList<>();
-        OtherUser user = new OtherUser("Lucas", "1241317319265906");
+        OtherUser user = new OtherUser("Logan", "512148565");
         otherUsers.add(user);
         PreferredUserService service = mRetrofit.create(PreferredUserService.class);
         Call<List<OtherUser>> call = service.getPreferredFriends(mUserId);

@@ -37,7 +37,7 @@ public class InitialActivity extends AppCompatActivity {
             @Override
             public void run() {
                 Intent intent = new Intent(InitialActivity.this, MainActivity.class);
-                startActivity(intent);;
+                startActivity(intent);
             }
         }, 500);
     }
