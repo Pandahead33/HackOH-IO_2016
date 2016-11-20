@@ -3,6 +3,8 @@
           xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-feature android:name="android.hardware.location.gps" />
 
     <application
         android:allowBackup="true"
@@ -20,8 +22,8 @@
             android:value="@string/facebook_app_id"/>
 
         <activity
-            android:name=".MainActivity"
-            android:label="@string/title_activity_main"
+            android:name=".SplashScreen"
+            android:label="@string/title_activity_splash"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -29,6 +31,12 @@
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/title_activity_main"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait">
         </activity>
         <activity android:name=".InitialActivity"
             android:screenOrientation="portrait">

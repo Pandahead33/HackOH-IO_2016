@@ -5,6 +5,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -49,6 +52,21 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.CardViewHolder> {
         //cardViewHolder.name.setText(cards.get(i).name);
 
         cardViewHolder.image.setImageResource(cards.get(i).photoId);
+
+        setFadeAnimation(cardViewHolder.itemView);
+
+    }
+
+    private void setFadeAnimation(View view) {
+        AlphaAnimation anim = new AlphaAnimation(0.0f, 1.0f);
+        anim.setDuration(1500);
+        view.startAnimation(anim);
+    }
+
+    private void setScaleAnimation(View view) {
+        ScaleAnimation anim = new ScaleAnimation(0.0f, 1.0f, 0.0f, 1.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        anim.setDuration(4000);
+        view.startAnimation(anim);
     }
 
     @Override
