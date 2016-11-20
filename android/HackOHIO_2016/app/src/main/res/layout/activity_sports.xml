@@ -13,6 +13,6 @@
         android:layout_height="wrap_content"
         android:listSelector="@drawable/list_selector"
         android:background="@drawable/list_grad"
-        >
+        android:paddingBottom="16dp">
     </ListView>
 </LinearLayout>

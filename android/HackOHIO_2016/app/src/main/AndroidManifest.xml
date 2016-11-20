@@ -53,7 +53,7 @@
             android:name=".SportsActivity"
             android:label="@string/title_activity_sports"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
             android:name=".HangActivity"
