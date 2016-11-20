@@ -14,9 +14,19 @@ import android.widget.TextView;
 
 import com.facebook.AccessToken;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+import com.example.loganpatino.hackohio2016.RetrofitPreferredUserInterface.PreferredUserService;
 
 
 /**
@@ -30,9 +40,11 @@ import java.util.List;
 public class PreferredUsersFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
-    private Context mContext;
-    private List<String> mPreferredUsersList;
     private PreferredUserAdapter mAdapter;
+    private String mUserId;
+    private Retrofit mRetrofit;
+    private List<OtherUser> mOtherUsers;
+    private final String BASE_URL = "http://cswebdesign.biz/beacon/";
 
     public PreferredUsersFragment() {
         // Required empty public constructor
@@ -46,8 +58,12 @@ public class PreferredUsersFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mContext = getActivity().getApplicationContext();
-        mPreferredUsersList = getPreferredFriends();
+        mUserId = AccessToken.getCurrentAccessToken().getUserId();
+        mRetrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        mOtherUsers = getOtherUsers();
     }
 
     @Override
@@ -105,14 +121,53 @@ public class PreferredUsersFragment extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
-    private List<String> getPreferredFriends() {
-        String userId = AccessToken.getCurrentAccessToken().getUserId();
-        // TODO: Get preferred friends from db and make appropriate list
+    private List<OtherUser> getOtherUsers() {
+        List<OtherUser> otherUsers = new ArrayList<>();
+        OtherUser user = new OtherUser("Logan", "testing");
+        otherUsers.add(user);
+        PreferredUserService service = mRetrofit.create(PreferredUserService.class);
+        Call<List<OtherUser>> call = service.getPreferredFriends(mUserId);
+        call.enqueue(new Callback<List<OtherUser>>() {
+            @Override
+            public void onResponse(Call<List<OtherUser>> call, Response<List<OtherUser>> response) {
+                if (response.isSuccessful()) {
+                    //Try to get response body
+                    List<OtherUser> result = response.body();
+                    Log.d("RESULT", String.valueOf(result));
 
-        // dummy data to test
-        List<String> list = Arrays.asList("Logan", "Lucas", "Alex", "Clinton", "Logan", "Lucas", "Alex", "Clinton", "Logan", "Lucas", "Alex", "Clinton", "Logan", "Lucas", "Alex", "Clinton", "Logan", "Lucas", "Alex", "Clinton", "Logan", "Lucas", "Alex", "Clinton");
+                    for (OtherUser p : result) {
+                        Log.d("PRINT", p.getFirstName());
+                    }
+                }
+                else {
+                    //Try to get response body
+                    BufferedReader reader = null;
+                    StringBuilder sb = new StringBuilder();
+                    reader = new BufferedReader(new InputStreamReader(response.errorBody().byteStream()));
 
-        return list;
+                    String line;
+
+                    try {
+                        while ((line = reader.readLine()) != null) {
+                            sb.append(line);
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+
+                    String result = sb.toString();
+                    Log.d("RESULT", result);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<OtherUser>> call, Throwable t) {
+
+            }
+        });
+
+        return otherUsers;
     }
 
     private class PreferredUserAdapter extends RecyclerView.Adapter<PreferredUserViewHolder> {
@@ -124,12 +179,12 @@ public class PreferredUsersFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(PreferredUserViewHolder holder, int position) {
-            holder.setName(mPreferredUsersList.get(position));
+            holder.setName(mOtherUsers.get(position).getFirstName());
         }
 
         @Override
         public int getItemCount() {
-            return mPreferredUsersList.size();
+            return mOtherUsers.size();
         }
     }
 

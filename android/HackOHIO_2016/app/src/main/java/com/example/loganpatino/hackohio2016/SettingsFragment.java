@@ -15,6 +15,17 @@ import android.widget.TextView;
 
 import com.facebook.AccessToken;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+
+import com.example.loganpatino.hackohio2016.RetrofitSettingsInterface.SettingsService;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,6 +38,9 @@ import com.facebook.AccessToken;
 public class SettingsFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
+    private String mUserId;
+    private final String BASE_URL = "http://cswebdesign.biz/beacon/";
+    private Retrofit mRetrofit;
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -40,6 +54,8 @@ public class SettingsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mUserId = AccessToken.getCurrentAccessToken().getUserId();
+        mRetrofit = new Retrofit.Builder().baseUrl(BASE_URL).build();
     }
 
     @Override
@@ -48,8 +64,10 @@ public class SettingsFragment extends Fragment {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_settings, container, false);
 
+        final String id = AccessToken.getCurrentAccessToken().getUserId();
+
         Switch notificationSwitch = (Switch) view.findViewById(R.id.notificationSwitch);
-        notificationSwitch.setChecked(getReceiveNotificationSetting());
+        //notificationSwitch.setChecked(getReceiveNotificationSetting());
         notificationSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -59,7 +77,7 @@ public class SettingsFragment extends Fragment {
 
         final TextView rangeProgress = (TextView) view.findViewById(R.id.rangeProgress);
         SeekBar seekBar = (SeekBar) view.findViewById(R.id.rangeSeekBar);
-        seekBar.setProgress(getDistance());
+        //seekBar.setProgress(getDistance());
         rangeProgress.setText(String.valueOf(seekBar.getProgress()));
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
@@ -75,9 +93,8 @@ public class SettingsFragment extends Fragment {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                String id = AccessToken.getCurrentAccessToken().getUserId();
                 int distance = seekBar.getProgress();
-                setDistance(id, distance);
+                setDistance(distance);
             }
         });
 
@@ -123,23 +140,179 @@ public class SettingsFragment extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
-    private boolean setDistance(String userId, int distance) {
-        // TODO: Set distance in db
-        return true;
+    private boolean setDistance(int distance) {
+        final boolean[] ans = {false};
+        SettingsService service = mRetrofit.create(RetrofitSettingsInterface.SettingsService.class);
+        Call<Boolean> call = service.setDistance(mUserId, distance);
+        call.enqueue(new Callback<Boolean>() {
+            @Override
+            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                if (response.isSuccessful()) {
+                    //Try to get response body
+                    boolean result = response.body();
+                    Log.d("RESULT", String.valueOf(result));
+                    ans[0] = result;
+                }
+                else {
+                    //Try to get response body
+                    BufferedReader reader = null;
+                    StringBuilder sb = new StringBuilder();
+                    reader = new BufferedReader(new InputStreamReader(response.errorBody().byteStream()));
+
+                    String line;
+
+                    try {
+                        while ((line = reader.readLine()) != null) {
+                            sb.append(line);
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+
+                    String result = sb.toString();
+                    Log.d("RESULT", result);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Boolean> call, Throwable t) {
+
+            }
+        });
+
+        return ans[0];
     }
 
     private int getDistance() {
-        // TODO: Get distance from db
-        return 5;
+        final int[] ans = {-1};
+        SettingsService service = mRetrofit.create(SettingsService.class);
+        Call<Integer> call = service.getDistance(mUserId);
+        call.enqueue(new Callback<Integer>() {
+            @Override
+            public void onResponse(Call<Integer> call, Response<Integer> response) {
+                if (response.isSuccessful()) {
+                    //Try to get response body
+                    int result = response.body();
+                    Log.d("RESULT", String.valueOf(result));
+                    ans[0] = result;
+                }
+                else {
+                    //Try to get response body
+                    BufferedReader reader = null;
+                    StringBuilder sb = new StringBuilder();
+                    reader = new BufferedReader(new InputStreamReader(response.errorBody().byteStream()));
+
+                    String line;
+
+                    try {
+                        while ((line = reader.readLine()) != null) {
+                            sb.append(line);
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+
+                    String result = sb.toString();
+                    Log.d("RESULT", result);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Integer> call, Throwable t) {
+
+            }
+        });
+
+        return ans[0];
     }
 
     private boolean getReceiveNotificationSetting() {
-        // TODO: Get notification setting from db
-        return false;
+        final boolean[] ans = {false};
+        SettingsService service = mRetrofit.create(SettingsService.class);
+        Call<Boolean> call = service.getReceiveNotificationSetting(mUserId);
+        call.enqueue(new Callback<Boolean>() {
+            @Override
+            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                if (response.isSuccessful()) {
+                    //Try to get response body
+                    boolean result = response.body();
+                    Log.d("RESULT", String.valueOf(result));
+                    ans[0] = result;
+                }
+                else {
+                    //Try to get response body
+                    BufferedReader reader = null;
+                    StringBuilder sb = new StringBuilder();
+                    reader = new BufferedReader(new InputStreamReader(response.errorBody().byteStream()));
+
+                    String line;
+
+                    try {
+                        while ((line = reader.readLine()) != null) {
+                            sb.append(line);
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+
+                    String result = sb.toString();
+                    Log.d("RESULT", result);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Boolean> call, Throwable t) {
+
+            }
+        });
+
+        return ans[0];
     }
 
     private boolean setReceiveNotificationSetting(boolean notifications) {
-        // TODO: Set notofication setting in db
-        return true;
+        final boolean[] ans = {false};
+        SettingsService service = mRetrofit.create(SettingsService.class);
+        Call<Boolean> call = service.setReceiveNotificationSetting(mUserId, notifications);
+        call.enqueue(new Callback<Boolean>() {
+            @Override
+            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                if (response.isSuccessful()) {
+                    //Try to get response body
+                    boolean result = response.body();
+                    Log.d("RESULT", String.valueOf(result));
+                    ans[0] = result;
+                }
+                else {
+                    //Try to get response body
+                    BufferedReader reader = null;
+                    StringBuilder sb = new StringBuilder();
+                    reader = new BufferedReader(new InputStreamReader(response.errorBody().byteStream()));
+
+                    String line;
+
+                    try {
+                        while ((line = reader.readLine()) != null) {
+                            sb.append(line);
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+
+                    String result = sb.toString();
+                    Log.d("RESULT", result);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Boolean> call, Throwable t) {
+
+            }
+        });
+
+        return ans[0];
     }
 }

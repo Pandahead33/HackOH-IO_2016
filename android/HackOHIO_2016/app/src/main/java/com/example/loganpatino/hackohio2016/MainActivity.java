@@ -1,16 +1,9 @@
 package com.example.loganpatino.hackohio2016;
 
-import android.app.Fragment;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Base64;
 import android.util.Log;
 
 import com.facebook.AccessToken;
@@ -20,21 +13,29 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.Profile;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.List;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
     private LoginButton mLoginButton;
     private CallbackManager mCallbackManager;
     private AccessTokenTracker mAccessTokenTracker;
-
-
+    private String baseUrl = "http://cswebdesign.biz/beacon/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,10 +44,13 @@ public class MainActivity extends AppCompatActivity {
         FacebookSdk.sdkInitialize(getApplicationContext());
         mCallbackManager = CallbackManager.Factory.create();
 
+        // for testing purposes
+        //LoginManager.getInstance().logOut();
+
         mAccessTokenTracker = new AccessTokenTracker() {
             @Override
             protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
-               checkUser();
+                checkUser();
             }
         };
 
@@ -96,6 +100,74 @@ public class MainActivity extends AppCompatActivity {
         if (token != null) {
             Profile.fetchProfileForCurrentAccessToken();
             Log.d("PROFILE TEST", Profile.getCurrentProfile().getFirstName());
+
+            Profile currentProfile = Profile.getCurrentProfile();
+            String id = currentProfile.getId();
+            String firstName = currentProfile.getFirstName();
+            String lastName = currentProfile.getLastName();
+            String photoUrl = String.valueOf(currentProfile.getProfilePictureUri(25, 25));
+
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(baseUrl)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+
+            RetrofitUserInterface.UserService service = retrofit.create(RetrofitUserInterface.UserService.class);
+            Call<ResponseBody> call = service.setUser(id, firstName, lastName, "testing");
+
+            call.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+                    if (response.isSuccessful()) {
+                        //Try to get response body
+                        BufferedReader reader = null;
+                        StringBuilder sb = new StringBuilder();
+                        reader = new BufferedReader(new InputStreamReader(response.body().byteStream()));
+
+                        String line;
+
+                        try {
+                            while ((line = reader.readLine()) != null) {
+                                sb.append(line);
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+
+                        String result = sb.toString();
+                        Log.d("RESULT", result);
+                    }
+                    else {
+                        //Try to get response body
+                        BufferedReader reader = null;
+                        StringBuilder sb = new StringBuilder();
+                        reader = new BufferedReader(new InputStreamReader(response.errorBody().byteStream()));
+
+                        String line;
+
+                        try {
+                            while ((line = reader.readLine()) != null) {
+                                sb.append(line);
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+
+                        String result = sb.toString();
+                        Log.d("RESULT", result);
+                    }
+
+
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    Log.e("ERROR", "we failed fam");
+                }
+            });
 
             Intent intent = new Intent(getApplicationContext(), MainTabActivity.class);
             startActivity(intent);
