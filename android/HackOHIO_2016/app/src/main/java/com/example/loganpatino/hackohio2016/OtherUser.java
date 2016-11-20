@@ -25,4 +25,8 @@ public class OtherUser {
     public String getFirstName() {
         return this.firstName;
     }
+
+    public String getProfilePicUrl() {
+        return this.profilePicUrl;
+    }
 }

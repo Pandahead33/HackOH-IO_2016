@@ -11,4 +11,38 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.loganpatino.hackohio2016.LobbyActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.2"
+            android:text="Volleyball Lobby"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+            android:id="@+id/title"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.2"
+            android:text="waiting"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:gravity="bottom|end"
+            android:paddingEnd="60dp"
+            android:paddingBottom="32dp"
+            android:id="@+id/waiting"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.6"
+            android:id="@+id/recycler">
+
+        </android.support.v7.widget.RecyclerView>
+
+    </LinearLayout>
+
 </RelativeLayout>
