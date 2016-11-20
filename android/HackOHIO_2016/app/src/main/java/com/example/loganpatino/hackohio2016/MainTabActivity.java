@@ -19,6 +19,10 @@ import android.view.ViewGroup;
 
 import android.widget.TextView;
 
+import static com.example.loganpatino.hackohio2016.R.drawable.ic_home_white_36dp;
+import static com.example.loganpatino.hackohio2016.R.drawable.ic_people_white_36dp;
+import static com.example.loganpatino.hackohio2016.R.drawable.ic_settings_white_36dp;
+
 public class MainTabActivity extends AppCompatActivity implements
         SettingsFragment.OnFragmentInteractionListener,
         MainFragment.OnFragmentInteractionListener,
@@ -57,6 +61,10 @@ public class MainTabActivity extends AppCompatActivity implements
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
         mViewPager.setCurrentItem(1);
+
+        tabLayout.getTabAt(0).setIcon(ic_settings_white_36dp);
+        tabLayout.getTabAt(1).setIcon(ic_home_white_36dp);
+        tabLayout.getTabAt(2).setIcon(ic_people_white_36dp);
     }
 
     @Override
@@ -129,19 +137,6 @@ public class MainTabActivity extends AppCompatActivity implements
         public int getCount() {
             // Show 3 total pages.
             return 3;
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            switch (position) {
-                case 0:
-                    return "SETTINGS";
-                case 1:
-                    return "HOME";
-                case 2:
-                    return "FRIENDS";
-            }
-            return null;
         }
     }
 }
