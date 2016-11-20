@@ -76,8 +76,6 @@ public class MainFragment extends Fragment {
 
         rv.addOnItemTouchListener( new RecyclerItemClickListener(context, rv ,new RecyclerItemClickListener.OnItemClickListener() {
                     @Override public void onItemClick(View view, int position) {
-                        System.out.println(position);
-
 
                         switch(position) {
                             //sports
@@ -134,14 +132,14 @@ public class MainFragment extends Fragment {
                 })
         );
 
-        GridLayoutManager llm = new GridLayoutManager(getActivity(), 1);
+        LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         rv.setLayoutManager(llm);
-        rv.setHasFixedSize(true);
+        rv.setHasFixedSize(false);
 
         RecyclerView.ItemAnimator itemAnimator = new DefaultItemAnimator();
+
         itemAnimator.setAddDuration(1000);
         rv.setItemAnimator(itemAnimator);
-
         initializeData();
         initializeAdapter();
 
