@@ -14,7 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/notificationSwitch"
-            android:layout_marginBottom="16dip"/>
+            android:layout_marginBottom="48dp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -24,13 +24,16 @@
                 android:layout_width="0dp"
                 android:layout_weight="0.5"
                 android:layout_height="wrap_content"
-                android:id="@+id/range"/>
+                android:id="@+id/range"
+                android:textColor="#000"
+                android:layout_marginBottom="8dp"/>
             <TextView
                 android:text=""
                 android:layout_width="0dp"
                 android:layout_weight="0.5"
                 android:layout_height="wrap_content"
                 android:id="@+id/rangeProgress"
+                android:textColor="#000"
                 android:gravity="end"/>
         </LinearLayout>
 
@@ -43,11 +46,11 @@
             android:layout_marginStart="16dip"
             android:layout_marginEnd="16dip"/>
 
-        <Button
+        <!--<Button
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:text="Get Location"
-            android:onClick="locateButt" />
+            android:onClick="locateButt" /> -->
 
     </LinearLayout>
 

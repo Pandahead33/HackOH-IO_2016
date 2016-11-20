@@ -113,7 +113,7 @@ public class LobbyActivity extends AppCompatActivity {
             int dots = 0;
             while (count < 150000) {
                 count++;
-                Log.d("count", String.valueOf(count));
+                //Log.d("count", String.valueOf(count));
                 if (count > threshold) {
                     runOnUiThread(new Runnable() {
                         @Override
