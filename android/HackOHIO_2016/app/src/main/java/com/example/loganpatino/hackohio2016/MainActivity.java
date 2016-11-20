@@ -1,11 +1,16 @@
 package com.example.loganpatino.hackohio2016;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.util.Log;
 
 import com.facebook.AccessToken;
@@ -18,6 +23,8 @@ import com.facebook.Profile;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -26,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
     private LoginButton mLoginButton;
     private CallbackManager mCallbackManager;
     private AccessTokenTracker mAccessTokenTracker;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         mAccessTokenTracker = new AccessTokenTracker() {
             @Override
             protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
-                checkUser();
+               checkUser();
             }
         };
 

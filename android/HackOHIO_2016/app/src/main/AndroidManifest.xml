@@ -36,6 +36,7 @@
             android:label="@string/title_activity_main_tab"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
-    </application>
+
+  </application>
 
 </manifest>

@@ -1,12 +1,25 @@
 package com.example.loganpatino.hackohio2016;
 
+import android.animation.Animator;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -18,14 +31,13 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class MainFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private List<Card> cards;
+    private List<Card> sports;
+    private RecyclerView rv;
+    private RecyclerView sporty;
+    private Context context;
+    private int lastPosition = -1;
 
     private OnFragmentInteractionListener mListener;
 
@@ -44,27 +56,96 @@ public class MainFragment extends Fragment {
     // TODO: Rename and change types and number of parameters
     public static MainFragment newInstance(String param1, String param2) {
         MainFragment fragment = new MainFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
+
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_main, container, false);
+        View view = inflater.inflate(R.layout.recyclerview_activity, container, false);
+
+        rv=(RecyclerView) view.findViewById(R.id.rv);
+
+        rv.addOnItemTouchListener( new RecyclerItemClickListener(context, rv ,new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override public void onItemClick(View view, int position) {
+                        System.out.println(position);
+
+
+                        switch(position) {
+                            //sports
+                            case 0:
+                                System.out.println("sports");
+                                break;
+                            //hang
+                            case 1:
+                                System.out.println("hang");
+                                break;
+                            //health
+                            case 2:
+                                System.out.println("health");
+                                break;
+                            //nightlife
+                            case 3:
+                                System.out.println("nightlife");
+                                break;
+
+                            //food
+                            case 4:
+                                System.out.println("food");
+                                break;
+
+                            //hobby
+                            case 5:
+                                System.out.println("hobby");
+                                break;
+
+                            //random
+                            case 6:
+                                System.out.println("random");
+                                break;
+
+                            //error
+                            default:
+                                System.out.println("error");
+                                break;
+
+
+
+
+
+                        }
+                        /*
+                        Intent intent = new Intent(getActivity(), InitialActivity.class);
+                        startActivity(intent);*/
+
+                    }
+
+                    @Override public void onLongItemClick(View view, int position) {
+                        // do whatever
+                    }
+                })
+        );
+
+        GridLayoutManager llm = new GridLayoutManager(getActivity(), 1);
+        rv.setLayoutManager(llm);
+        rv.setHasFixedSize(true);
+
+        RecyclerView.ItemAnimator itemAnimator = new DefaultItemAnimator();
+        itemAnimator.setAddDuration(1000);
+        rv.setItemAnimator(itemAnimator);
+
+        initializeData();
+        initializeAdapter();
+
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -104,5 +185,33 @@ public class MainFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    private void animate(final View view, final int position){
+
+        Animation animation = AnimationUtils.loadAnimation(getContext(), android.R.anim.slide_in_left);
+        view.startAnimation(animation);
+        lastPosition = position;
+
+    }
+
+
+    private void initializeData(){
+        cards = new ArrayList<>();
+        cards.add(new Card("Sports", R.drawable.sports));
+        cards.add(new Card("Hangouts", R.drawable.hang));
+        cards.add(new Card("Health", R.drawable.health));
+        cards.add(new Card("Nightlife", R.drawable.nightlife));
+        cards.add(new Card("Food", R.drawable.food));
+        cards.add(new Card("Hobby", R.drawable.hobby));
+        cards.add(new Card("Random", R.drawable.random));
+
+    }
+
+
+
+    private void initializeAdapter(){
+        RVAdapter adapter = new RVAdapter(cards);
+        rv.setAdapter(adapter);
     }
 }
