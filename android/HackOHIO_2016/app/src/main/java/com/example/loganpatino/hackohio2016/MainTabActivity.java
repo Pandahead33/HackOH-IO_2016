@@ -56,7 +56,7 @@ public class MainTabActivity extends AppCompatActivity implements
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
-
+        mViewPager.setCurrentItem(1);
     }
 
     @Override
@@ -116,11 +116,11 @@ public class MainTabActivity extends AppCompatActivity implements
             //return PlaceholderFragment.newInstance(position + 1);
             switch (position) {
                 case 0:
-                    return SettingsFragment.newInstance("test", "test");
+                    return SettingsFragment.newInstance();
                 case 1:
                     return MainFragment.newInstance("test", "test");
                 case 2:
-                    return PreferredUsersFragment.newInstance("test", "test");
+                    return PreferredUsersFragment.newInstance();
             }
             return null;
         }

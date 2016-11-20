@@ -4,9 +4,19 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import com.facebook.AccessToken;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 
 /**
@@ -18,53 +28,42 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class PreferredUsersFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    private Context mContext;
+    private List<String> mPreferredUsersList;
+    private PreferredUserAdapter mAdapter;
 
     public PreferredUsersFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment PreferredUsersFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static PreferredUsersFragment newInstance(String param1, String param2) {
+    public static PreferredUsersFragment newInstance() {
         PreferredUsersFragment fragment = new PreferredUsersFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        mContext = getActivity().getApplicationContext();
+        mPreferredUsersList = getPreferredFriends();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_preferred_users, container, false);
+        View view = inflater.inflate(R.layout.fragment_preferred_users, container, false);
+
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler);
+        LinearLayoutManager llm = new LinearLayoutManager(getActivity());
+        llm.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(llm);
+        mAdapter = new PreferredUserAdapter();
+        recyclerView.setAdapter(mAdapter);
+
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -104,5 +103,46 @@ public class PreferredUsersFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    private List<String> getPreferredFriends() {
+        String userId = AccessToken.getCurrentAccessToken().getUserId();
+        // TODO: Get preferred friends from db and make appropriate list
+
+        // dummy data to test
+        List<String> list = Arrays.asList("Logan", "Lucas", "Alex", "Clinton", "Logan", "Lucas", "Alex", "Clinton", "Logan", "Lucas", "Alex", "Clinton", "Logan", "Lucas", "Alex", "Clinton", "Logan", "Lucas", "Alex", "Clinton", "Logan", "Lucas", "Alex", "Clinton");
+
+        return list;
+    }
+
+    private class PreferredUserAdapter extends RecyclerView.Adapter<PreferredUserViewHolder> {
+        @Override
+        public PreferredUserViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.preferred_user_card_view, parent, false);
+            return new PreferredUserViewHolder(itemView);
+        }
+
+        @Override
+        public void onBindViewHolder(PreferredUserViewHolder holder, int position) {
+            holder.setName(mPreferredUsersList.get(position));
+        }
+
+        @Override
+        public int getItemCount() {
+            return mPreferredUsersList.size();
+        }
+    }
+
+    private class PreferredUserViewHolder extends RecyclerView.ViewHolder {
+        private TextView name;
+
+        public PreferredUserViewHolder(View itemView) {
+            super(itemView);
+            name = (TextView) itemView.findViewById(R.id.name);
+        }
+
+        public void setName(String name) {
+            this.name.setText(name);
+        }
     }
 }
