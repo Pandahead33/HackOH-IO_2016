@@ -3,6 +3,7 @@ package com.example.loganpatino.hackohio2016;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -83,7 +84,7 @@ public class VotingActivity extends AppCompatActivity {
         click2 = false;
 
         mOtherUsers = new ArrayList<>();
-        mOtherUsers.add(new OtherUser("Logan", AccessToken.getCurrentAccessToken().getUserId()));
+        mOtherUsers.add(new OtherUser("Logan", "512148565"));
         mOtherUsers.add(new OtherUser("Lucas", "1241317319265906"));
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler);
@@ -157,10 +158,31 @@ public class VotingActivity extends AppCompatActivity {
             if (position == 1 && click1) {
                 this.dash.setText("-");
                 this.vote.setText("1");
+                click1 = false;
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        click2 = true;
+                        mAdapter.notifyDataSetChanged();
+                    }
+                }, 4250);
+
+
+
             }
-            else if (position == 2 && click2) {
+            if(click2) {
                 this.dash.setText("-");
-                this.vote.setText("2");
+                this.vote.setText("1");
+                click2 = false;
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent intent = new Intent(VotingActivity.this, MeetingActivity.class);
+                        intent.putExtra("sick", "512148565");
+                        startActivity(intent);
+                    }
+                }, 1750);
             }
         }
     }
@@ -168,6 +190,8 @@ public class VotingActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         moveTaskToBack(true);
+        android.os.Process.killProcess(android.os.Process.myPid());
+        System.exit(1);
     }
 
 

@@ -18,7 +18,7 @@
     <string name="title_activity_food">FoodActivity</string>
     <string name="title_activity_hobby">HobbyActivity</string>
     <string name="title_activity_random">RandomActivity</string>
-    <string name="title_activity_splash">SplashActivity</string>
+    <string name="title_activity_splash">Beacon</string>
     <string name="section_format">Hello World from section: %1$d</string>
 
     <!-- TODO: Remove or change this placeholder text -->
