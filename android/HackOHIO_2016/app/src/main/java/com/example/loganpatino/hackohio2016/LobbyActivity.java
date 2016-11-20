@@ -33,6 +33,15 @@ public class LobbyActivity extends AppCompatActivity {
     private final int WAIT_TIME = 8000;
 
     @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(LobbyActivity.this, MainTabActivity.class);
+        finish();
+        startActivity(intent);
+
+    }
+
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lobby);
@@ -153,5 +162,6 @@ public class LobbyActivity extends AppCompatActivity {
             });
             return null;
         }
+
     }
 }

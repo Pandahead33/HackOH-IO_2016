@@ -33,6 +33,7 @@ public class MeetingActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         Intent intent = new Intent(MeetingActivity.this, MainTabActivity.class);
+        finish();
         startActivity(intent);
 
     }

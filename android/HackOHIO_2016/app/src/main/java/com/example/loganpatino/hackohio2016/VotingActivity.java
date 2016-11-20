@@ -37,6 +37,10 @@ public class VotingActivity extends AppCompatActivity {
     private VotingUserAdapter mAdapter;
     private boolean click1;
     private boolean click2;
+    private Handler one = new Handler();
+    private Handler two = new Handler();
+    private Runnable rone = null;
+    private Runnable rtwo = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -159,7 +163,8 @@ public class VotingActivity extends AppCompatActivity {
                 this.dash.setText("-");
                 this.vote.setText("1");
                 click1 = false;
-                new Handler().postDelayed(new Runnable() {
+                Handler one = new Handler();
+                one.postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         click2 = true;
@@ -175,7 +180,9 @@ public class VotingActivity extends AppCompatActivity {
                 this.vote.setText("1");
                 click2 = false;
 
-                new Handler().postDelayed(new Runnable() {
+
+
+                two.postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         Intent intent = new Intent(VotingActivity.this, MeetingActivity.class);
@@ -189,10 +196,11 @@ public class VotingActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        moveTaskToBack(true);
-        android.os.Process.killProcess(android.os.Process.myPid());
-        System.exit(1);
+        Intent intent = new Intent(VotingActivity.this, MainTabActivity.class);
+        finish();
+        startActivity(intent);
     }
+
 
 
 
