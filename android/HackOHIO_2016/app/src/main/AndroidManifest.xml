@@ -91,9 +91,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
-        <activity android:name=".VotingActivity" >
+        <activity android:name=".VotingActivity"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".LobbyActivity" >
+        <activity android:name=".LobbyActivity"
+            android:screenOrientation="portrait">
         </activity>
 
 

@@ -20,7 +20,7 @@ import android.widget.ImageView;
 public class SplashScreen extends Activity {
 
     /** Duration of wait **/
-    private final int SPLASH_DISPLAY_LENGTH = 3000;
+    private final int SPLASH_DISPLAY_LENGTH = 2000;
 
     /** Called when the activity is first created. */
     @Override
@@ -48,8 +48,8 @@ public class SplashScreen extends Activity {
     }
 
     private void setScaleAnimation(View view) {
-        ScaleAnimation anim = new ScaleAnimation(0.0f, 1.0f, 0.0f, 1.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-        anim.setDuration(4000);
+        ScaleAnimation anim = new ScaleAnimation(0.0f, 2.0f, 0.0f, 2.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        anim.setDuration(3000);
         view.startAnimation(anim);
     }
 }

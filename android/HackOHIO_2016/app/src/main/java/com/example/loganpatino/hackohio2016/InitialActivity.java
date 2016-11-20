@@ -26,9 +26,9 @@ public class InitialActivity extends AppCompatActivity {
     public void enterMain(View view)
     {
 
-        final Animation animShake = AnimationUtils.loadAnimation(this, R.anim.shake);
+        //final Animation animShake = AnimationUtils.loadAnimation(this, R.anim.shake);
         ImageButton btn = (ImageButton) findViewById(R.id.circle2);
-        //btn.startAnimation(animShake);
+        //btn.startAnimation(animShake)3;
         setScaleAnimation(btn);
 
         // Execute some code after 2 seconds have passed
@@ -39,12 +39,12 @@ public class InitialActivity extends AppCompatActivity {
                 Intent intent = new Intent(InitialActivity.this, MainActivity.class);
                 startActivity(intent);;
             }
-        }, 2000);
+        }, 500);
     }
 
     private void setScaleAnimation(View view) {
         ScaleAnimation anim = new ScaleAnimation(1.0f, 0.0f, 1.0f, 0.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-        anim.setDuration(4000);
+        anim.setDuration(1000);
         view.startAnimation(anim);
     }
 
