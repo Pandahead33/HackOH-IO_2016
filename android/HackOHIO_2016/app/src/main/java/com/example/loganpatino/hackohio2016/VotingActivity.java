@@ -22,36 +22,6 @@ public class VotingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_voting);
     }
 
-    private class getLocationOptions extends AsyncTask<String, String, String> {
 
-        @Override
-        protected String doInBackground(String... params) {
-            Gson gson = new Gson();
-            HttpURLConnection urlConnection = null;
-            StringBuilder sb = new StringBuilder();
 
-            try {
-                URL url = new URL("test");
-                urlConnection = (HttpURLConnection) url.openConnection();
-                InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-                BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    sb.append(line);
-                }
-            }
-            catch (Exception e) {
-                Log.e("CONNECTION ERROR", "HTTP connection error");
-            }
-            finally {
-                if (urlConnection != null) {
-                    urlConnection.disconnect();
-                }
-            }
-
-            //mPreferredUsersList = gson.fromJson(sb.toString(), OtherUser[].class);
-            return null;
-        }
-    }
 }
