@@ -73,7 +73,7 @@ public class SettingsFragment extends Fragment {
         notificationSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                setReceiveNotificationSetting(isChecked);
+                //setReceiveNotificationSetting(isChecked);
             }
         });
 
@@ -96,18 +96,12 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 int distance = seekBar.getProgress();
-                setDistance(distance);
+                //setDistance(distance);
             }
         });
 
         return view;
         };
-
-    public void locateButt(View view)
-    {
-        /*Intent intent = new Intent(getActivity(), .class);
-        startActivity(intent);*/
-    }
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
