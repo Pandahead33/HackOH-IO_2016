@@ -4,9 +4,16 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import android.widget.SeekBar;
+import android.widget.Switch;
+import android.widget.TextView;
+
+import com.facebook.AccessToken;
 
 
 /**
@@ -64,7 +71,41 @@ public class SettingsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_settings, container, false);
+        final View view = inflater.inflate(R.layout.fragment_settings, container, false);
+
+        Switch notificationSwitch = (Switch) view.findViewById(R.id.notificationSwitch);
+        notificationSwitch.setChecked(getReceiveNotificationSetting());
+        notificationSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                setReceiveNotificationSetting(isChecked);
+            }
+        });
+
+        final TextView rangeProgress = (TextView) view.findViewById(R.id.rangeProgress);
+        SeekBar seekBar = (SeekBar) view.findViewById(R.id.rangeSeekBar);
+        seekBar.setProgress(getDistance());
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                rangeProgress.setText(String.valueOf(progress));
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                String id = AccessToken.getCurrentAccessToken().getUserId();
+                int distance = seekBar.getProgress();
+                setDistance(id, distance);
+            }
+        });
+
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -104,5 +145,23 @@ public class SettingsFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    private void setDistance(String userId, int distance) {
+        // TODO: Set distance in db
+    }
+
+    private int getDistance() {
+        // TODO: Get distance from db
+        return 5;
+    }
+
+    private boolean getReceiveNotificationSetting() {
+        // TODO: Get notification setting from db
+        return false;
+    }
+
+    private void setReceiveNotificationSetting(boolean notifications) {
+        // TODO: Set notofication setting in db
     }
 }
