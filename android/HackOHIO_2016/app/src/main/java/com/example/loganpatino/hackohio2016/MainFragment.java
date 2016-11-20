@@ -73,6 +73,8 @@ public class MainFragment extends Fragment {
         View view = inflater.inflate(R.layout.recyclerview_activity, container, false);
 
         rv=(RecyclerView) view.findViewById(R.id.rv);
+        int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.zero);
+        rv.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
 
         rv.addOnItemTouchListener( new RecyclerItemClickListener(context, rv ,new RecyclerItemClickListener.OnItemClickListener() {
                     @Override public void onItemClick(View view, int position) {
@@ -132,14 +134,14 @@ public class MainFragment extends Fragment {
                 })
         );
 
-        LinearLayoutManager llm = new LinearLayoutManager(getActivity());
+        GridLayoutManager llm = new GridLayoutManager(getActivity(), 1);
+        llm.setOrientation(1);
+        llm.offsetChildrenVertical(-40);
+
         rv.setLayoutManager(llm);
-        rv.setHasFixedSize(false);
+        rv.setHasFixedSize(true);
 
-        RecyclerView.ItemAnimator itemAnimator = new DefaultItemAnimator();
 
-        itemAnimator.setAddDuration(1000);
-        rv.setItemAnimator(itemAnimator);
         initializeData();
         initializeAdapter();
 
