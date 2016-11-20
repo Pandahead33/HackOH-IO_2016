@@ -18,15 +18,22 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_marginBottom="66dp"
-        android:weightSum="1">
+        android:weightSum="1"
+        android:gravity="center_horizontal"
+        android:backgroundTint="@color/abc_hint_foreground_material_dark"
+        android:background="#ffffff">
 
-        <ImageButton
+
+    <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_margin="16dp"
+            android:layout_gravity="center_vertical"
             android:clickable="true"
-            android:src="@drawable/circle2" />
+            android:src="@drawable/ic_bigboi"
+            android:id="@+id/circle2"
+            android:onClick="enterMain"
+            android:layout_weight="0.42"
+            android:backgroundTint="@color/abc_background_cache_hint_selector_material_light" />
 
     </LinearLayout>
 </RelativeLayout>

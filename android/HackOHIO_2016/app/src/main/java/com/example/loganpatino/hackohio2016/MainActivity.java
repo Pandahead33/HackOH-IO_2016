@@ -103,9 +103,12 @@ public class MainActivity extends AppCompatActivity {
 
             Profile currentProfile = Profile.getCurrentProfile();
             String id = currentProfile.getId();
+
             String firstName = currentProfile.getFirstName();
             String lastName = currentProfile.getLastName();
             String photoUrl = String.valueOf(currentProfile.getProfilePictureUri(25, 25));
+            Log.d("carl", photoUrl);
+            Log.d("carl", id);
 
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl(baseUrl)
